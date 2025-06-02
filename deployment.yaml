@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
-  labels:
-    app: my-app
+  name: mywebapp
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
+  replicas: 1
   template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
+    spec: # Pod spec
       containers:
-      - name: my-app
-        image: fuad1983/web1:latest  # Ganti dengan username, image dan tag Anda
+      - name: mycontainer
+        image: "devopsjourney1/mywebapp:latest"
         ports:
-        - containerPort: 80 
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: mykustom-map
+        resources:
+          requests:
+            memory: "16Mi" 
+            cpu: "50m"    # 500milliCPUs (1/2 CPU)
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
