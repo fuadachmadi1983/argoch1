@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: nginx
 spec:
-  replicas: 5
+  replicas: 4
   selector:
     matchLabels:
-      app: argoch1
+      app: web
   template:
     metadata:
       labels:
-        app: argoch1
+        app: web
     spec:
       containers:
-      - name: argoch1
-        image: nginx:latest  # You can change this to your application image
+      - name: web
+        image: fuad1983/web1:latest  # You can change this to your application image
         ports:
         - containerPort: 80
         resources:
@@ -33,7 +33,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: argoch1
+    name: web
   minReplicas: 3
   maxReplicas: 6
   metrics:
