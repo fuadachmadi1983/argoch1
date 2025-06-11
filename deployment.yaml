@@ -6,14 +6,14 @@ spec:
   replicas: 4
   selector:
     matchLabels:
-      app: web
+      app: argoch1
   template:
     metadata:
       labels:
-        app: web
+        app: argoch1
     spec:
       containers:
-      - name: web
+      - name: argoch1
         image: fuad1983/web1:latest  # You can change this to your application image
         ports:
         - containerPort: 80
