@@ -1,23 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mywebapp
+  name: argoch1
 spec:
-  replicas: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: argoch1
   template:
-    spec: # Pod spec
+    metadata:
+      labels:
+        app: argoch1
+    spec:
       containers:
-      - name: mycontainer
-        image: "devopsjourney1/mywebapp:latest"
+      - name: argoch1
+        image: nginx:latest  # You can change this to your application image
         ports:
         - containerPort: 80
-        envFrom:
-        - configMapRef:
-            name: mykustom-map
         resources:
           requests:
-            memory: "16Mi" 
-            cpu: "50m"    # 500milliCPUs (1/2 CPU)
+            cpu: 100m
+            memory: 128Mi
           limits:
-            memory: "128Mi"
-            cpu: "100m"
+            cpu: 200m
+            memory: 256Mi
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: argoch1-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: argoch1
+  minReplicas: 3
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80 
