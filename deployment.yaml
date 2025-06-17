@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: argoch1
-        image: fuad1983/web1:latest  # You can change this to your application image
+        image: fuad1983/web:v1  # You can change this to your application image
         ports:
         - containerPort: 80
         resources:
